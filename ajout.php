@@ -17,6 +17,6 @@ $stmt -> bind_param('iss', $id, $username, $message);
 if($stmt -> execute() == TRUE){
     header('Location: index.php');
 } else {
-    echo "Echec de l'envoie";
+    echo "Echec de l'envoi";
 }
 $stmt -> close();
