@@ -9,6 +9,8 @@
 //page refactorisée contenant la connection à la base de données
 include 'connection.php';
 
+session_start();
+
 //nombre de commentaires par page
 $limit = 3;
 
@@ -16,14 +18,18 @@ $limit = 3;
 function mess()
 {
     global $connection, $limit, $depart;
-    $sql = "SELECT username, commentaires, DATE_FORMAT(send_date, '%d/%m/%Y %Hh%imin%ss') AS date FROM commentaires WHERE 1
+    $sql = "SELECT id, username, commentaires, DATE_FORMAT(send_date, '%d/%m/%Y %Hh%imin%ss') AS date FROM commentaires WHERE 1
 ORDER BY date DESC LIMIT $depart, $limit ";
     $result = $connection->query($sql);
     while ($row = $result->fetch_assoc()) {
+        $id = $row['id'];
         $username = $row['username'];
         $message = $row['commentaires'];
         $sentDate = $row['date'];
         echo "<div>" . nl2br($message) . "</div><br><div>Envoyé par " . $username . " le " . $sentDate . "</div><br>";
+        if(isset($_SESSION['id']) !== NULL){
+            echo "<div><a href='modifier.php?id=".$id."'> Modifier </a> | <a href='supprimer.php?id=".$id."'> Supprimer </a></div><br>";
+        }
     }
 }
 
@@ -70,14 +76,14 @@ $depart = ($pageCourante-1)*$limit;
 <br>
 <form action="ajout.php" method="post">
     <label for="username">Pseudo</label>
-    <input id="username" name="username"><br><br>
+    <input id="username" name="username" placeholder="Pseudo"><br><br>
     <label for="message">Message</label>
     <textarea id="message" name="message"></textarea>
     <input type="submit" value="Envoyer">
 </form>
 <h2>Commentaires : </h2>
-<div><?php mess(); ?></div>
+<div id="message"><?php mess(); ?></div>
 <div><?php pagination(); ?></div>
-
+<script src="script.js"></script>
 </body>
 </html>
