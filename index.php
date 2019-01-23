@@ -9,15 +9,15 @@
 //page refactorisée contenant la connection à la base de données
 include 'connection.php';
 
+//nombre de commentaires par page
 $limit = 3;
 
-//fonction récupérant les données dans la table des commentaires
+//fonction récupérant et affichant les messages de la table des commentaires
 function mess()
 {
-    global $limit;
-    global $connection;
+    global $connection, $limit, $depart;
     $sql = "SELECT username, commentaires, DATE_FORMAT(send_date, '%d/%m/%Y %Hh%imin%ss') AS date FROM commentaires WHERE 1
-ORDER BY date DESC LIMIT $limit";
+ORDER BY date DESC LIMIT $depart, $limit ";
     $result = $connection->query($sql);
     while ($row = $result->fetch_assoc()) {
         $username = $row['username'];
@@ -27,22 +27,36 @@ ORDER BY date DESC LIMIT $limit";
     }
 }
 
+//fonction qui indique le nombre de pages et créé des liens pour chacune d'entres elles
 function pagination()
 {
-    global $connection, $limit;
+    global $connection, $limit, $pageCourante;
     $sql = "SELECT COUNT(*) AS nbrcomm FROM commentaires";
     $result = $connection->query($sql);
     while ($row = $result->fetch_assoc()) {
         $nbrcomm = $row['nbrcomm'];
     }
+    //calcul qui détermine le nombre de page en divisant le nombre de commentaire totale par le nombre de commentaire par page
     $nbrPage = ceil($nbrcomm/$limit);
     echo "Pages: ";
     for ($i = 1; $i <= $nbrPage; $i++) {
-        echo '<a href="index.php?page=' . $i . '">' . $i . '</a> ';
+        //condition qui permet d'enlever le lien de la pagination quand on est sur la page et ainsi indiquer sur quelle page est ouverte
+        if($i == $pageCourante){
+            echo $i.' ';
+        } else {
+        echo '<a href="index.php?page=' . $i . '">' . $i . '</a> ';}
     }
 }
+//récupére la page
+if(isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0){
+    $_GET['page'] = filter_var($_GET['page'], FILTER_SANITIZE_NUMBER_INT);
+    $pageCourante = $_GET['page'];
+} else {
+    $pageCourante = 1;
+}
 
-
+//variable qui détermine le point de départ des commentaires pour chaque page
+$depart = ($pageCourante-1)*$limit;
 ?>
 <!DOCTYPE html>
 <html lang="fr">
