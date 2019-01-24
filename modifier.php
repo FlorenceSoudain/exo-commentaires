@@ -7,8 +7,9 @@
  */
 
 session_start();
-echo "Bonjour " . $_SESSION['username'];
+
 include 'connection.php';
+
 $identifiant = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
 $sql = "SELECT * FROM commentaires WHERE id = $identifiant";
 $result = $connection->query($sql);
@@ -18,51 +19,49 @@ while ($row = $result->fetch_assoc()) {
     $commentaires = $row['commentaires'];
 }
 global $id, $nom, $commentaires;
+
+$click = isset($_POST['button']);
+
+if($click){
+    $modif = $_POST['modifcomm'];
+$stmt = $connection->prepare("UPDATE commentaires SET id = ?,
+   `username` = ?,
+   `commentaires` = ?,
+   `send_date` = ?
+   WHERE `id` = $id");
+$stmt->bind_param('isss',
+    $id,
+    $nom,
+    $modif,
+    $send);
+if($stmt->execute()){
+    header('Location: index.php');
+}
+$stmt->close();
+
+}
 ?>
 
     <!DOCTYPE html>
-    <html>
+    <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Ajouter une randonnée</title>
+        <title>Commentaires</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-    <a href="index.php">Liste des données</a>
-    <h1>Ajouter</h1>
-    <form action="update2.php?id=<?php echo $id ?>" method="post">
+
+    <h1>Modifier</h1>
+    <form action="" method="post">
         <div>
-            <label for="name">Name</label>
-            <input type="text" name="name" value="<?php echo $nom ?>">
+            Nom d'utilisateur : <?php echo $nom ?>
         </div>
 
         <div>
-            <label for="difficulty">Difficulté</label>
-            <select name="difficulty">
-                <option value="très facile" <?php echo $difficulte == 'très facile' ? 'selected' : ''?>>Très facile</option>
-                <option value="facile"  <?php echo $difficulte == 'facile' ? 'selected' : ''?>>Facile</option>
-                <option value="moyen"  <?php echo $difficulte == 'moyen' ? 'selected' : ''?>>Moyen</option>
-                <option value="difficile"  <?php echo $difficulte == 'difficile' ? 'selected' : ''?>>Difficile</option>
-                <option value="très difficile" <?php echo $difficulte == 'très difficile' ? 'selected' : ''?>>Très difficile</option>
-
-            </select>
+            <label for="message">Commentaire</label>
+            <textarea id="message" name="modifcomm"> <?php echo $commentaires ?></textarea>
         </div>
 
-        <div>
-            <label for="distance">Distance</label>
-            <input type="text" name="distance" value="<?php echo $distance ?>">
-        </div>
-        <div>
-            <label for="duration">Durée</label>
-            <input type="text" name="duration" value="<?php echo $duration ?>">
-        </div>
-        <div>
-            <label for="height_difference">Dénivelé</label>
-            <input type="text" name="height_difference" value="<?php echo $denivele ?>">
-        </div>
-        <div>
-            <label for="available">Available</label>
-            <input type="text" name="available" value="<?php echo $available ?>">
-        </div>
         <input type="submit" name="button" value="Envoyer">
     </form>
     </body>

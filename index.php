@@ -26,8 +26,8 @@ ORDER BY date DESC LIMIT $depart, $limit ";
         $username = $row['username'];
         $message = $row['commentaires'];
         $sentDate = $row['date'];
-        echo "<div>" . nl2br($message) . "</div><br><div>Envoyé par " . $username . " le " . $sentDate . "</div><br>";
-        if(isset($_SESSION['id']) !== NULL){
+        echo "<div class='mess'>" . nl2br($message) . "</div><br><div class='details'>Envoyé par " . $username . " le " . $sentDate . "</div><br>";
+        if(isset($_SESSION['id']) != NULL){
             echo "<div><a href='modifier.php?id=".$id."'> Modifier </a> | <a href='supprimer.php?id=".$id."'> Supprimer </a></div><br>";
         }
     }
@@ -63,27 +63,40 @@ if(isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0){
 
 //variable qui détermine le point de départ des commentaires pour chaque page
 $depart = ($pageCourante-1)*$limit;
+
+function connection(){
+    if(isset($_SESSION['id']) == NULL){
+    echo "<a href='login.php'>Se Connecter</a>";
+} else {
+        echo "Bonjour, " . $_SESSION['username'] . ". <a href='logout.php'>Se Déconnecter</a>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Espace commentaires</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>Espace commentaires</h1>
-<div>Laissez un commentaire</div>
+<div><?php connection(); ?></div>
+<h2>Laissez un commentaire</h2>
 <br>
 <form action="ajout.php" method="post">
-    <label for="username">Pseudo</label>
+    <label for="username"></label>
     <input id="username" name="username" placeholder="Pseudo"><br><br>
-    <label for="message">Message</label>
-    <textarea id="message" name="message"></textarea>
+    <label for="message"></label>
+    <textarea id="message" name="message" placeholder="Message"></textarea>
+    <div>
     <input type="submit" value="Envoyer">
+    </div>
 </form>
 <h2>Commentaires : </h2>
 <div id="message"><?php mess(); ?></div>
-<div><?php pagination(); ?></div>
+<div id="pagination"><?php pagination(); ?></div>
 <script src="script.js"></script>
 </body>
 </html>
