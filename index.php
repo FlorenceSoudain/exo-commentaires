@@ -83,6 +83,9 @@ function connection(){
 <body>
 <h1>Espace commentaires</h1>
 <div><?php connection(); ?></div>
+<h2>Commentaires : </h2>
+<div id="message"><?php mess(); ?></div>
+<div id="pagination"><?php pagination(); ?></div>
 <h2>Laissez un commentaire</h2>
 <br>
 <form action="ajout.php" method="post">
@@ -91,12 +94,10 @@ function connection(){
     <label for="message"></label>
     <textarea id="message" name="message" placeholder="Message"></textarea>
     <div>
-    <input type="submit" value="Envoyer">
+    <input id="btn" type="submit" value="Envoyer">
     </div>
 </form>
-<h2>Commentaires : </h2>
-<div id="message"><?php mess(); ?></div>
-<div id="pagination"><?php pagination(); ?></div>
+
 <script src="script.js"></script>
 </body>
 </html>

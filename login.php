@@ -18,6 +18,7 @@ if (isset($_SESSION['id']) == NULL) {
     <head>
         <meta charset="utf-8">
         <title>Login</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
 

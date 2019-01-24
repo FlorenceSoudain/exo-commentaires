@@ -17,13 +17,25 @@ textarea {
     padding: 2%;
 }
 #pagination{
-
-}
-.mess{
-
+    text-align: center;
+    font-weight: bold;
+    padding-top: 2%;
 }
 .details{
     border-bottom: dashed 1px indianred;
     padding-bottom: 1%;
     color: brown;
 }
+#btn{
+    margin-top: 1%;
+    font-size: 1.5em;
+}
+input{
+    font-size: 1em;
+    border: solid 1px black;
+    border-radius: 10px;
+    background: lightgray;
+    color: black;
+    padding: 1%;
+}
+
