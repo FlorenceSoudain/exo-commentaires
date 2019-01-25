@@ -29,6 +29,7 @@ textarea {
 #btn{
     margin-top: 1%;
     font-size: 1.5em;
+    cursor: pointer;
 }
 input{
     font-size: 1em;
@@ -38,4 +39,14 @@ input{
     color: black;
     padding: 1%;
 }
-
+.formInscription, .formLogin{
+    border: solid 2px black;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 5%;
+    margin: 5%;
+}
+label {
+    display: block;
+    padding: 1%;
+}

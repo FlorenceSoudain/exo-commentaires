@@ -12,7 +12,7 @@ include 'connection.php';
 session_start();
 
 //nombre de commentaires par page
-$limit = 3;
+$limit = 5;
 
 //fonction récupérant et affichant les messages de la table des commentaires
 function mess()
@@ -66,9 +66,16 @@ $depart = ($pageCourante-1)*$limit;
 
 function connection(){
     if(isset($_SESSION['id']) == NULL){
-    echo "<a href='login.php'>Se Connecter</a>";
+    echo "<a href='login.php'>Se Connecter</a> | <a href='inscription.php'>Inscription</a>";
 } else {
         echo "Bonjour, " . $_SESSION['username'] . ". <a href='logout.php'>Se Déconnecter</a>";
+    }
+}
+function pseudo(){
+    if(isset($_SESSION['id']) == NULL){
+    echo '<input id="username" name="username" placeholder="Pseudo">';
+    } else {
+    echo $_SESSION['username'];
     }
 }
 
@@ -87,10 +94,9 @@ function connection(){
 <div id="message"><?php mess(); ?></div>
 <div id="pagination"><?php pagination(); ?></div>
 <h2>Laissez un commentaire</h2>
-<br>
 <form action="ajout.php" method="post">
-    <label for="username"></label>
-    <input id="username" name="username" placeholder="Pseudo"><br><br>
+    <label for="username">Votre Pseudo :</label>
+    <div><?php pseudo(); ?></div>
     <label for="message"></label>
     <textarea id="message" name="message" placeholder="Message"></textarea>
     <div>

@@ -5,7 +5,7 @@ function ajaxRequest()
     xhttp.onreadystatechange = function() {
 
         if (this.readyState == 4 && this.status == 200) {
-
+            var obj = JSON.parse(this.responseText);
             document.getElementById('message').innerHTML = this.responseText;
             console.log(this.responseText);
         }
@@ -19,4 +19,4 @@ function ajaxRequest()
 
 }
 
-document.getElementById('actionUpdate').addEventListener('click', ajaxRequest);
+document.getElementById('btn').addEventListener('click', ajaxRequest);

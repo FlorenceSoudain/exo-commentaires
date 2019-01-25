@@ -14,7 +14,7 @@ if (isset($_SESSION['id']) == NULL) {
     ?>
 
     <!DOCTYPE html>
-    <html>
+    <html lang="fr">
     <head>
         <meta charset="utf-8">
         <title>Login</title>
@@ -22,7 +22,7 @@ if (isset($_SESSION['id']) == NULL) {
     </head>
     <body>
 
-    <form action="check_login.php" method="post">
+    <form class="formLogin" action="check_login.php" method="post">
         <div>
             <label for="username">Identifiant</label>
             <input id="username" type="text" name="username">
