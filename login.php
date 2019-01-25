@@ -21,24 +21,26 @@ if (isset($_SESSION['id']) == NULL) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-
-    <form class="formLogin" action="check_login.php" method="post">
-        <div>
-            <label for="username">Identifiant</label>
-            <input id="username" type="text" name="username">
-        </div>
-        <div>
-            <label for="password">Mot de passe </label>
-            <input id="password" type="password" name="password">
-        </div>
-        <div>
-            <input type="submit" name="button" value="Se connecter">
-        </div>
-
-    </form>
+    <h1 class="center">Se connecter</h1>
+    <div id="container">
+        <form class="formLogin" action="check_login.php" method="post">
+            <div>
+                <label for="username">Identifiant</label>
+                <input id="username" type="text" name="username">
+            </div>
+            <div>
+                <label for="password">Mot de passe</label>
+                <input id="password" type="password" name="password">
+            </div>
+            <div>
+                <input type="submit" name="button" value="Se connecter">
+            </div>
+        </form>
+        <a href="inscription.php">S'inscrire</a>
+    </div>
     </body>
     </html>
-<?php
+    <?php
 } else {
     echo "Vous êtes déjà connecté";
 }

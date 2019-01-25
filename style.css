@@ -42,11 +42,20 @@ input{
 .formInscription, .formLogin{
     border: solid 2px black;
     border-radius: 10px;
-    display: inline-block;
     padding: 5%;
-    margin: 5%;
 }
 label {
     display: block;
     padding: 1%;
+}
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.center {
+    text-align: center;
+}
+#erreur{
+    color: red;
 }

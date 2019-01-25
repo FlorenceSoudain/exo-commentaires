@@ -10,7 +10,6 @@
 include 'connection.php';
 session_start();
 if ($_SESSION['id'] != NULL) {
-    echo "Voulez-vous vous déconnecter, " . $_SESSION['username'] . " ?";
     $logout = filter_var(isset($_REQUEST['button']), FILTER_SANITIZE_URL);
     if ($logout == TRUE) {
         session_destroy();
@@ -26,12 +25,15 @@ if ($_SESSION['id'] != NULL) {
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+    <div id="container">
+        <div><?php echo "Voulez-vous vous déconnecter, " . $_SESSION['username'] . " ?"; ?></div>
 
-    <form action="" method="post">
-        <div>
-            <input type="submit" name="button" value="Se déconnecter">
-        </div>
-    </form>
+        <form action="" method="post">
+            <div>
+                <input id="btn" type="submit" name="button" value="Se déconnecter">
+            </div>
+        </form>
+    </div>
     </body>
     </html>
 

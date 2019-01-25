@@ -27,8 +27,8 @@ ORDER BY date DESC LIMIT $depart, $limit ";
         $message = $row['commentaires'];
         $sentDate = $row['date'];
         echo "<div class='mess'>" . nl2br($message) . "</div><br><div class='details'>Envoyé par " . $username . " le " . $sentDate . "</div><br>";
-        if(isset($_SESSION['id']) != NULL){
-            echo "<div><a href='modifier.php?id=".$id."'> Modifier </a> | <a href='supprimer.php?id=".$id."'> Supprimer </a></div><br>";
+        if (isset($_SESSION['id']) != NULL) {
+            echo "<div><a href='modifier.php?id=" . $id . "'> Modifier </a> | <a href='supprimer.php?id=" . $id . "'> Supprimer </a></div><br>";
         }
     }
 }
@@ -43,18 +43,20 @@ function pagination()
         $nbrcomm = $row['nbrcomm'];
     }
     //calcul qui détermine le nombre de page en divisant le nombre de commentaire totale par le nombre de commentaire par page
-    $nbrPage = ceil($nbrcomm/$limit);
+    $nbrPage = ceil($nbrcomm / $limit);
     echo "Pages: ";
     for ($i = 1; $i <= $nbrPage; $i++) {
         //condition qui permet d'enlever le lien de la pagination quand on est sur la page et ainsi indiquer sur quelle page est ouverte
-        if($i == $pageCourante){
-            echo $i.' ';
+        if ($i == $pageCourante) {
+            echo $i . ' ';
         } else {
-        echo '<a href="index.php?page=' . $i . '">' . $i . '</a> ';}
+            echo '<a href="index.php?page=' . $i . '">' . $i . '</a> ';
+        }
     }
 }
+
 //récupére la page
-if(isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0){
+if (isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0) {
     $_GET['page'] = filter_var($_GET['page'], FILTER_SANITIZE_NUMBER_INT);
     $pageCourante = $_GET['page'];
 } else {
@@ -62,20 +64,23 @@ if(isset($_GET['page']) AND !empty($_GET['page']) AND $_GET['page'] > 0){
 }
 
 //variable qui détermine le point de départ des commentaires pour chaque page
-$depart = ($pageCourante-1)*$limit;
+$depart = ($pageCourante - 1) * $limit;
 
-function connection(){
-    if(isset($_SESSION['id']) == NULL){
-    echo "<a href='login.php'>Se Connecter</a> | <a href='inscription.php'>Inscription</a>";
-} else {
+function connection()
+{
+    if (isset($_SESSION['id']) == NULL) {
+        echo "<a href='login.php'>Se Connecter</a> | <a href='inscription.php'>Inscription</a>";
+    } else {
         echo "Bonjour, " . $_SESSION['username'] . ". <a href='logout.php'>Se Déconnecter</a>";
     }
 }
-function pseudo(){
-    if(isset($_SESSION['id']) == NULL){
-    echo '<input id="username" name="username" placeholder="Pseudo">';
+
+function pseudo()
+{
+    if (isset($_SESSION['id']) == NULL) {
+        echo '<input id="username" name="username" placeholder="Pseudo">';
     } else {
-    echo $_SESSION['username'];
+        echo $_SESSION['username'];
     }
 }
 
@@ -94,13 +99,14 @@ function pseudo(){
 <div id="message"><?php mess(); ?></div>
 <div id="pagination"><?php pagination(); ?></div>
 <h2>Laissez un commentaire</h2>
+
 <form action="ajout.php" method="post">
     <label for="username">Votre Pseudo :</label>
     <div><?php pseudo(); ?></div>
     <label for="message"></label>
     <textarea id="message" name="message" placeholder="Message"></textarea>
     <div>
-    <input id="btn" type="submit" value="Envoyer">
+        <input id="btn" type="submit" value="Envoyer">
     </div>
 </form>
 
